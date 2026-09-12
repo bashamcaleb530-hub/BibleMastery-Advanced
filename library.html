@@ -545,22 +545,8 @@
 
 </div>
 
-<!--
-  LIBRARY DATA
-  ------------
-  This page is ready for a separate library-data.js file.
-
-  Later we will add:
-    <script src="library-data.js"></script>
-
-  That file should define:
-    window.BIBLEMASTERY_LIBRARY_BOOKS = [ ... ]
-
-  Each book will contain metadata and sections.
-  This keeps the books separate from this page and prepares the Library
-  for a real backend/database later.
--->
-<script src="library-data.js"></script>
+<!-- BibleMastery Library data is loaded from the Supabase backend. -->
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script>
 (function() {
   "use strict";
@@ -617,10 +603,19 @@
   const readerBookSearch = document.getElementById("readerBookSearch");
   const readerContent = document.getElementById("readerContent");
 
-  let libraryBooks = Array.isArray(window.BIBLEMASTERY_LIBRARY_BOOKS)
-    ? window.BIBLEMASTERY_LIBRARY_BOOKS
-    : [];
+  const SUPABASE_URL =
+    "https://pjkkxvntssvukulxipfr.supabase.co";
 
+  const SUPABASE_PUBLISHABLE_KEY =
+    "sb_publishable_1kehaIywv1Wb9Iwj2OPGdg_aFosOSwK";
+
+  const supabaseClient =
+    window.supabase.createClient(
+      SUPABASE_URL,
+      SUPABASE_PUBLISHABLE_KEY
+    );
+
+  let libraryBooks = [];
   let currentBook = null;
   let lastRankedResults = [];
   let currentResultLimit = 3;
@@ -1314,21 +1309,154 @@
       `${count} book${count === 1 ? "" : "s"} loaded`;
   }
 
-  /*
-    Future backend connection:
-    --------------------------
-    When the BibleMastery Library backend is ready, replace or extend this
-    function so the signed-in user's owned books are loaded from the backend.
+  function mapDatabaseBook(book, sectionsByBook) {
+    const sections = (sectionsByBook[book.id] || [])
+      .slice()
+      .sort(function(a, b) {
+        return (a.section_order || 0) - (b.section_order || 0);
+      })
+      .map(function(section) {
+        return {
+          id: section.id,
+          title: section.section_title || "Section",
+          text: section.section_text || "",
+          topics: section.topics || [],
+          doctrines: section.doctrines || [],
+          keywords: section.keywords || [],
+          scriptureRefs: section.scripture_refs || []
+        };
+      });
 
-    The page itself does not need to change.
-  */
+    return {
+      id: book.id,
+      slug: book.slug,
+      title: book.title,
+      author: book.author,
+      year: book.publication_year,
+      category: book.category || "Library Book",
+      description: book.description || "",
+      access: book.access_tier || "starter",
+      publicDomainVerified: !!book.public_domain_verified,
+      sourceNote: book.rights_note || "",
+      sourceUrl: book.source_url || "",
+      coverImageUrl: book.cover_image_url || "",
+      topics: book.topics || [],
+      doctrines: book.doctrines || [],
+      keywords: book.keywords || [],
+      scriptureRefs: book.scripture_refs || [],
+      sections: sections
+    };
+  }
+
   async function loadLibraryBooks() {
-    if (Array.isArray(window.BIBLEMASTERY_LIBRARY_BOOKS)) {
-      libraryBooks = window.BIBLEMASTERY_LIBRARY_BOOKS;
-    }
+    libraryShelf.innerHTML = `
+      <div class="empty-state">
+        Loading BibleMastery Library…
+      </div>
+    `;
 
-    updateBookCount();
-    renderLibraryShelf();
+    libraryBookCount.textContent = "Loading books…";
+
+    try {
+      const {
+        data: booksData,
+        error: booksError
+      } = await supabaseClient
+        .from("library_books")
+        .select(`
+          id,
+          slug,
+          title,
+          author,
+          publication_year,
+          category,
+          description,
+          access_tier,
+          public_domain_verified,
+          rights_note,
+          source_url,
+          cover_image_url,
+          topics,
+          doctrines,
+          keywords,
+          scripture_refs,
+          is_published
+        `)
+        .eq("is_published", true)
+        .order("title", { ascending: true });
+
+      if (booksError) {
+        throw booksError;
+      }
+
+      const books = Array.isArray(booksData) ? booksData : [];
+
+      if (!books.length) {
+        libraryBooks = [];
+        updateBookCount();
+        renderLibraryShelf();
+        return;
+      }
+
+      const bookIds = books.map(function(book) {
+        return book.id;
+      });
+
+      const {
+        data: sectionsData,
+        error: sectionsError
+      } = await supabaseClient
+        .from("library_sections")
+        .select(`
+          id,
+          book_id,
+          section_order,
+          section_title,
+          section_text,
+          topics,
+          doctrines,
+          keywords,
+          scripture_refs
+        `)
+        .in("book_id", bookIds)
+        .order("section_order", { ascending: true });
+
+      if (sectionsError) {
+        throw sectionsError;
+      }
+
+      const sectionsByBook = {};
+
+      (sectionsData || []).forEach(function(section) {
+        if (!sectionsByBook[section.book_id]) {
+          sectionsByBook[section.book_id] = [];
+        }
+
+        sectionsByBook[section.book_id].push(section);
+      });
+
+      libraryBooks = books.map(function(book) {
+        return mapDatabaseBook(book, sectionsByBook);
+      });
+
+      updateBookCount();
+      renderLibraryShelf();
+
+    } catch (error) {
+      console.error("BibleMastery Library load error:", error);
+
+      libraryBooks = [];
+      libraryBookCount.textContent = "Library unavailable";
+
+      libraryShelf.innerHTML = `
+        <div class="empty-state">
+          BibleMastery could not load the Library from the database.
+        </div>
+      `;
+
+      librarySearchSummary.textContent =
+        "The Library backend could not be reached. Please try again.";
+    }
   }
 
   librarySearchButton.addEventListener("click", runLibrarySearch);
