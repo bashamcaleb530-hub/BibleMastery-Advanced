@@ -804,6 +804,95 @@
     color: #e8e6df;
   }
 
+
+/* =========================================
+   BIBLEMASTERY ADVANCED — PERSONAL STUDY
+========================================= */
+.advanced-suite{
+  margin: 22px 0;
+  padding: 18px;
+  background: linear-gradient(135deg, rgba(18,30,51,.98), rgba(12,22,40,.98));
+  border: 1px solid rgba(216,185,106,.38);
+  border-radius: 15px;
+  box-shadow: 0 14px 35px rgba(0,0,0,.22);
+}
+.advanced-suite-header{
+  display:flex; align-items:center; justify-content:space-between;
+  gap:10px; flex-wrap:wrap; margin-bottom:14px;
+}
+.advanced-suite-header h2{margin:0;color:var(--gold);font-size:22px}
+.advanced-muted{color:#aaa89f;font-size:14px}
+.advanced-tabs{display:flex;gap:8px;flex-wrap:wrap;margin:0 0 16px}
+.advanced-tabs button{
+  width:auto; margin:0; padding:9px 12px;
+  border-radius:9px; background:rgba(8,15,29,.68);
+  border:1px solid rgba(216,185,106,.28); color:#e8e6df;
+}
+.advanced-tabs button.active{
+  border-color:rgba(216,185,106,.8);
+  background:rgba(216,185,106,.16); color:var(--gold);
+}
+.advanced-panel{
+  padding:16px; border:1px solid rgba(216,185,106,.20);
+  border-radius:12px; background:rgba(8,15,29,.38);
+}
+.advanced-panel h3{margin-top:0;color:var(--gold)}
+.advanced-grid{
+  display:grid; grid-template-columns:repeat(auto-fit,minmax(210px,1fr));
+  gap:12px; margin-bottom:12px;
+}
+.advanced-field label{display:block;margin-bottom:6px;font-weight:700}
+.advanced-field input,.advanced-field select,.advanced-field textarea{
+  width:100%;box-sizing:border-box;padding:10px;
+  color:var(--text);background:var(--panel-2);
+  border:1px solid rgba(216,185,106,.30);border-radius:7px;
+}
+.advanced-field textarea{min-height:110px;resize:vertical}
+.advanced-actions{display:flex;gap:8px;flex-wrap:wrap;margin:12px 0}
+.advanced-actions button{width:auto;margin:0}
+.advanced-output{margin-top:12px;line-height:1.6}
+.advanced-card,.advanced-result,.advanced-verse-row{
+  padding:11px 12px;margin:8px 0;border-radius:9px;
+  background:rgba(255,255,255,.035);
+  border:1px solid rgba(216,185,106,.14);
+}
+.advanced-parallel-grid{
+  display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
+  gap:12px;
+}
+.advanced-parallel-column{
+  padding:12px;border-radius:10px;background:rgba(255,255,255,.03);
+  border:1px solid rgba(216,185,106,.16);
+}
+.advanced-parallel-column h4{margin:0 0 10px;color:var(--gold)}
+.advanced-error{color:#ffb4b4}
+.advanced-success{color:#b7efc5}
+.analytics-row{display:flex;gap:10px;flex-wrap:wrap}
+.analytics-stat{
+  min-width:120px;padding:12px;border-radius:10px;
+  background:rgba(255,255,255,.04);border:1px solid rgba(216,185,106,.16)
+}
+.analytics-stat strong{display:block;font-size:22px;color:var(--gold)}
+.saved-item-row{
+  display:flex;justify-content:space-between;gap:12px;align-items:flex-start;
+  padding:10px 0;border-bottom:1px solid rgba(216,185,106,.12)
+}
+.workflow-step{
+  display:flex;gap:10px;align-items:flex-start;padding:9px 0;
+  border-bottom:1px solid rgba(216,185,106,.10)
+}
+.workflow-step input{width:auto;margin-top:4px}
+.strong-token{
+  display:inline-block;margin:2px 3px;padding:2px 5px;border-radius:5px;
+  border:1px solid rgba(216,185,106,.28);color:var(--gold);
+  cursor:pointer;font-size:12px
+}
+@media(max-width:700px){
+  .advanced-suite{padding:12px}
+  .advanced-tabs button{flex:1 1 45%}
+  .saved-item-row{display:block}
+}
+
 </style>
 
 </head>
@@ -916,6 +1005,203 @@
     </div>
     <div id="personalAiAnswer" class="biblemastery-ai-answer">AI is ready when you are.</div>
   </div>
+
+
+<section id="advancedPersonalStudySuite" class="advanced-suite">
+  <div class="advanced-suite-header">
+    <h2>⚡ Advanced Personal Bible Study</h2>
+    <span class="advanced-muted">Advanced study tools built into your personal workspace</span>
+  </div>
+
+  <div class="advanced-tabs">
+    <button class="advanced-tab active" data-advanced-panel="advancedParallelPanel" type="button">📚 Parallel</button>
+    <button class="advanced-tab" data-advanced-panel="advancedInterlinearPanel" type="button">🔤 Interlinear</button>
+    <button class="advanced-tab" data-advanced-panel="advancedSearchPanel" type="button">🔎 Advanced Search</button>
+    <button class="advanced-tab" data-advanced-panel="advancedProjectsPanel" type="button">🗂 Study Projects</button>
+    <button class="advanced-tab" data-advanced-panel="advancedWorkflowPanel" type="button">🧭 Workflows</button>
+    <button class="advanced-tab" data-advanced-panel="advancedPlansPanel" type="button">📅 Reading Plans</button>
+    <button class="advanced-tab" data-advanced-panel="advancedAnalyticsPanel" type="button">📊 History</button>
+    <button class="advanced-tab" data-advanced-panel="advancedPowerPanel" type="button">📝 Saved Work</button>
+  </div>
+
+  <div id="advancedParallelPanel" class="advanced-panel">
+    <h3>Parallel Version Comparison</h3>
+    <p class="advanced-muted">Uses the book and chapter selected in the Personal Study Bible Reader.</p>
+    <div class="advanced-grid">
+      <div class="advanced-field">
+        <label for="advancedParallelOne">Comparison 1</label>
+        <select id="advancedParallelOne">
+          <option value="WEB" selected>World English Bible</option>
+          <option value="KJV">King James Version</option>
+          <option value="KJV1611">KJV 1611</option>
+          <option value="KJVPLUS">KJV + Strong's</option>
+          <option value="YLT">Young's Literal Translation</option>
+          <option value="ASV">ASV</option>
+          <option value="GENEVA1599">Geneva 1599</option>
+          <option value="DRA">Douay-Rheims</option>
+          <option value="BSB">Berean Standard Bible</option>
+          <option value="MSB">Majority Standard Bible</option>
+        </select>
+      </div>
+      <div class="advanced-field">
+        <label for="advancedParallelTwo">Comparison 2</label>
+        <select id="advancedParallelTwo">
+          <option value="">None</option>
+          <option value="KJV">King James Version</option>
+          <option value="KJV1611">KJV 1611</option>
+          <option value="KJVPLUS">KJV + Strong's</option>
+          <option value="YLT">Young's Literal Translation</option>
+          <option value="WEB">World English Bible</option>
+          <option value="ASV">ASV</option>
+          <option value="GENEVA1599">Geneva 1599</option>
+          <option value="DRA">Douay-Rheims</option>
+          <option value="BSB" selected>Berean Standard Bible</option>
+          <option value="MSB">Majority Standard Bible</option>
+        </select>
+      </div>
+    </div>
+    <div class="advanced-actions">
+      <button id="advancedLoadParallel" type="button">Load Current Chapter</button>
+    </div>
+    <div id="advancedParallelOutput" class="advanced-output">
+      <div class="advanced-muted">Choose a book and chapter in the Bible Reader, then load the comparison.</div>
+    </div>
+  </div>
+
+  <div id="advancedInterlinearPanel" class="advanced-panel" hidden>
+    <h3>Interlinear / Strong's Study View</h3>
+    <p class="advanced-muted">Loads KJV+ for the current chapter and exposes Strong's markers for word study.</p>
+    <div class="advanced-actions">
+      <button id="advancedLoadInterlinear" type="button">Load Current Chapter</button>
+    </div>
+    <div id="advancedInterlinearOutput" class="advanced-output"></div>
+  </div>
+
+  <div id="advancedSearchPanel" class="advanced-panel" hidden>
+    <h3>Advanced Search</h3>
+    <div class="advanced-grid">
+      <div class="advanced-field">
+        <label for="advancedSearchQuery">Search current translation</label>
+        <input id="advancedSearchQuery" type="text" placeholder="faith hope love">
+      </div>
+      <div class="advanced-field">
+        <label for="advancedSearchMode">Match</label>
+        <select id="advancedSearchMode">
+          <option value="phrase">Exact phrase</option>
+          <option value="all">All words</option>
+          <option value="any">Any word</option>
+        </select>
+      </div>
+      <div class="advanced-field">
+        <label for="advancedSearchScope">Scope</label>
+        <select id="advancedSearchScope">
+          <option value="all">Whole Bible</option>
+          <option value="ot">Old Testament</option>
+          <option value="nt">New Testament</option>
+          <option value="currentBook">Current book</option>
+        </select>
+      </div>
+    </div>
+    <div class="advanced-actions">
+      <button id="advancedSearchButton" type="button">Search</button>
+    </div>
+    <div id="advancedSearchOutput" class="advanced-output"></div>
+  </div>
+
+  <div id="advancedProjectsPanel" class="advanced-panel" hidden>
+    <h3>Thematic Study Builder</h3>
+    <div class="advanced-grid">
+      <div class="advanced-field">
+        <label for="advancedProjectTitle">Study title</label>
+        <input id="advancedProjectTitle" type="text" placeholder="Faith Study">
+      </div>
+      <div class="advanced-field">
+        <label for="advancedProjectType">Study type</label>
+        <select id="advancedProjectType">
+          <option>Topical Study</option>
+          <option>Book Study</option>
+          <option>Character Study</option>
+          <option>Word Study</option>
+          <option>Sermon Research</option>
+          <option>Doctrine Research</option>
+        </select>
+      </div>
+    </div>
+    <div class="advanced-field">
+      <label for="advancedProjectNotes">Study notes</label>
+      <textarea id="advancedProjectNotes" placeholder="Add research notes, questions, observations, and conclusions..."></textarea>
+    </div>
+    <div class="advanced-actions">
+      <button id="advancedAddCurrentPassage" type="button">Add Current Passage</button>
+      <button id="advancedSaveProject" type="button">Save Study Project</button>
+    </div>
+    <div id="advancedProjectPassages" class="advanced-output"></div>
+    <div id="advancedProjectsList" class="advanced-output"></div>
+  </div>
+
+  <div id="advancedWorkflowPanel" class="advanced-panel" hidden>
+    <h3>Guided Study Workflows</h3>
+    <div class="advanced-grid">
+      <div class="advanced-field">
+        <label for="advancedWorkflowType">Workflow</label>
+        <select id="advancedWorkflowType">
+          <option value="inductive">Inductive Study</option>
+          <option value="topical">Topical Study</option>
+          <option value="character">Character Study</option>
+          <option value="sermon">Sermon Preparation</option>
+        </select>
+      </div>
+    </div>
+    <div class="advanced-actions">
+      <button id="advancedStartWorkflow" type="button">Load Workflow</button>
+      <button id="advancedSaveWorkflow" type="button">Save Progress</button>
+    </div>
+    <div id="advancedWorkflowSteps" class="advanced-output"></div>
+  </div>
+
+  <div id="advancedPlansPanel" class="advanced-panel" hidden>
+    <h3>Custom Reading Plans</h3>
+    <div class="advanced-grid">
+      <div class="advanced-field">
+        <label for="advancedPlanName">Plan name</label>
+        <input id="advancedPlanName" type="text" placeholder="My 30-Day Plan">
+      </div>
+      <div class="advanced-field">
+        <label for="advancedPlanChapters">Chapters per day</label>
+        <input id="advancedPlanChapters" type="number" min="1" max="20" value="2">
+      </div>
+      <div class="advanced-field">
+        <label for="advancedPlanDays">Days</label>
+        <input id="advancedPlanDays" type="number" min="1" max="365" value="30">
+      </div>
+    </div>
+    <div class="advanced-actions">
+      <button id="advancedGeneratePlan" type="button">Generate From Current Chapter</button>
+    </div>
+    <div id="advancedPlanOutput" class="advanced-output"></div>
+  </div>
+
+  <div id="advancedAnalyticsPanel" class="advanced-panel" hidden>
+    <h3>Study History & Analytics</h3>
+    <div id="advancedAnalyticsStats" class="analytics-row"></div>
+    <div class="advanced-actions">
+      <button id="advancedRefreshAnalytics" type="button">Refresh</button>
+      <button id="advancedClearHistory" type="button">Clear Advanced History</button>
+    </div>
+    <div id="advancedHistoryList" class="advanced-output"></div>
+  </div>
+
+  <div id="advancedPowerPanel" class="advanced-panel" hidden>
+    <h3>Notes, Highlights & Saved Work</h3>
+    <p class="advanced-muted">Scans BibleMastery local saved work without changing its existing storage format.</p>
+    <div class="advanced-actions">
+      <button id="advancedScanSavedWork" type="button">Scan Saved Work</button>
+      <button id="advancedExportSavedWork" type="button">Export JSON</button>
+    </div>
+    <div id="advancedSavedWorkOutput" class="advanced-output"></div>
+  </div>
+</section>
+
 
 <div class="personal-study-layout">
       <div class="personal-study-primary">
@@ -6949,6 +7235,393 @@
     bibleMasteryAiQuestion.focus();
   });
 
+</script>
+
+
+
+<script>
+(function(){
+  "use strict";
+
+  const $ = id => document.getElementById(id);
+  const esc = value => String(value ?? "")
+    .replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;")
+    .replace(/"/g,"&quot;").replace(/'/g,"&#039;");
+
+  const ADV_PROJECTS = "biblemastery-advanced-personal-projects-v1";
+  const ADV_WORKFLOW = "biblemastery-advanced-personal-workflow-v1";
+  const ADV_PLANS = "biblemastery-advanced-personal-plans-v1";
+  const ADV_HISTORY = "biblemastery-advanced-personal-history-v1";
+
+  let projectPassages = [];
+
+  function safeParse(key, fallback){
+    try {
+      const raw = localStorage.getItem(key);
+      return raw ? JSON.parse(raw) : fallback;
+    } catch(e) { return fallback; }
+  }
+  function saveJSON(key, value){ localStorage.setItem(key, JSON.stringify(value)); }
+
+  function recordAdvancedActivity(type, detail){
+    const history = safeParse(ADV_HISTORY, []);
+    history.unshift({type, detail, at:new Date().toISOString()});
+    saveJSON(ADV_HISTORY, history.slice(0,500));
+  }
+
+  function ready(){
+    return readerBible && Array.isArray(readerBible.books) &&
+      readerBookIndex >= 0 && readerChapterIndex >= 0;
+  }
+
+  function bookName(book){
+    return (book && (book.englishName || book.book || book.name || book.title)) || "Unknown Book";
+  }
+
+  function chapterNumber(chapter, index){
+    if (!chapter) return index + 1;
+    if (chapter.chapter && typeof chapter.chapter === "object" && chapter.chapter.number) return chapter.chapter.number;
+    return chapter.chapter || chapter.number || chapter.id || (index + 1);
+  }
+
+  function verseNumber(verse, index){
+    if (!verse) return index + 1;
+    return verse.verse || verse.number || verse.id || (index + 1);
+  }
+
+  function verseText(verse){
+    return String((verse && (verse.text || verse.content || verse.verseText)) || "");
+  }
+
+  function currentReference(){
+    if(!ready()) return "";
+    const book = readerBible.books[readerBookIndex];
+    const chapter = book.chapters[readerChapterIndex];
+    return bookName(book) + " " + chapterNumber(chapter, readerChapterIndex);
+  }
+
+  function currentTranslation(){
+    return readerTranslationSelect ? readerTranslationSelect.value : "KJV";
+  }
+
+  async function normalizedTranslation(code){
+    const raw = await loadBibleTranslation(code);
+    return normalizeBibleForReader(raw);
+  }
+
+  // Tabs
+  document.querySelectorAll(".advanced-tab").forEach(btn=>{
+    btn.addEventListener("click",()=>{
+      document.querySelectorAll(".advanced-tab").forEach(b=>b.classList.remove("active"));
+      document.querySelectorAll(".advanced-panel").forEach(p=>p.hidden=true);
+      btn.classList.add("active");
+      const panel = $(btn.dataset.advancedPanel);
+      if(panel) panel.hidden=false;
+    });
+  });
+
+  // Parallel
+  $("advancedLoadParallel").addEventListener("click", async()=>{
+    const out=$("advancedParallelOutput");
+    if(!ready()){
+      out.innerHTML='<div class="advanced-error">Choose a book and chapter in the Personal Study Bible Reader first.</div>';
+      return;
+    }
+    out.innerHTML='<div class="advanced-muted">Loading comparison...</div>';
+    try{
+      const codes=[currentTranslation(),$("advancedParallelOne").value,$("advancedParallelTwo").value].filter(Boolean);
+      const unique=[...new Set(codes)];
+      const data=await Promise.all(unique.map(async code=>({code,data:code===currentTranslation()?readerBible:await normalizedTranslation(code)})));
+      const columns=data.map(item=>{
+        const book=item.data.books[readerBookIndex];
+        const chapter=book && book.chapters ? book.chapters[readerChapterIndex] : null;
+        const verses=chapter && Array.isArray(chapter.verses) ? chapter.verses : [];
+        return '<div class="advanced-parallel-column"><h4>'+esc(item.code)+'</h4>'+
+          verses.map((v,i)=>'<div class="advanced-verse-row"><strong>'+esc(verseNumber(v,i))+'.</strong> '+esc(verseText(v).replace(/<S>\d+<\/S>/g,""))+'</div>').join("")+
+          '</div>';
+      }).join("");
+      out.innerHTML='<div class="advanced-parallel-grid">'+columns+'</div>';
+      recordAdvancedActivity("parallel comparison",currentReference());
+    }catch(e){
+      out.innerHTML='<div class="advanced-error">Parallel comparison could not load: '+esc(e.message||e)+'</div>';
+    }
+  });
+
+  // Interlinear / Strong's
+  $("advancedLoadInterlinear").addEventListener("click", async()=>{
+    const out=$("advancedInterlinearOutput");
+    if(!ready()){
+      out.innerHTML='<div class="advanced-error">Choose a book and chapter in the Personal Study Bible Reader first.</div>';
+      return;
+    }
+    out.innerHTML='<div class="advanced-muted">Loading KJV+ Strong’s data...</div>';
+    try{
+      const plus=await normalizedTranslation("KJVPLUS");
+      const book=plus.books[readerBookIndex];
+      const chapter=book && book.chapters ? book.chapters[readerChapterIndex] : null;
+      const verses=chapter && Array.isArray(chapter.verses) ? chapter.verses : [];
+      const prefix=readerBookIndex<39?"H":"G";
+      out.innerHTML=verses.map((v,i)=>{
+        const raw=verseText(v);
+        const marked=esc(raw).replace(/&lt;S&gt;(\d+)&lt;\/S&gt;/g,
+          '<span class="strong-token" data-strong="'+prefix+'$1">'+prefix+'$1</span>');
+        return '<div class="advanced-verse-row"><strong>'+esc(verseNumber(v,i))+'.</strong> '+marked+'</div>';
+      }).join("") || '<div class="advanced-muted">No Strong’s data was returned for this chapter.</div>';
+
+      out.querySelectorAll("[data-strong]").forEach(token=>{
+        token.addEventListener("click",()=>{
+          const code=token.dataset.strong;
+          const candidates=[
+            document.getElementById("strongsInput"),
+            document.getElementById("strongInput"),
+            document.getElementById("wordLookupInput")
+          ].filter(Boolean);
+          if(candidates[0]){
+            candidates[0].value=code;
+            candidates[0].scrollIntoView({behavior:"smooth",block:"center"});
+            candidates[0].focus();
+          } else {
+            navigator.clipboard && navigator.clipboard.writeText(code).catch(()=>{});
+            alert(code+" copied/selected for Hebrew/Greek word study.");
+          }
+        });
+      });
+      recordAdvancedActivity("interlinear",currentReference());
+    }catch(e){
+      out.innerHTML='<div class="advanced-error">Interlinear view could not load: '+esc(e.message||e)+'</div>';
+    }
+  });
+
+  // Advanced Search
+  $("advancedSearchButton").addEventListener("click",()=>{
+    const out=$("advancedSearchOutput");
+    const q=$("advancedSearchQuery").value.trim();
+    if(!q){out.innerHTML='<div class="advanced-error">Enter something to search for.</div>';return;}
+    if(!readerBible || !Array.isArray(readerBible.books)){out.innerHTML='<div class="advanced-error">Load the Personal Study Bible Reader first.</div>';return;}
+    const mode=$("advancedSearchMode").value;
+    const scope=$("advancedSearchScope").value;
+    const words=q.toLowerCase().split(/\s+/).filter(Boolean);
+    const results=[];
+    readerBible.books.forEach((book,bi)=>{
+      if(scope==="ot" && bi>=39) return;
+      if(scope==="nt" && bi<39) return;
+      if(scope==="currentBook" && bi!==readerBookIndex) return;
+      (book.chapters||[]).forEach((chapter,ci)=>{
+        (chapter.verses||[]).forEach((verse,vi)=>{
+          const text=verseText(verse).replace(/<S>\d+<\/S>/g,"");
+          const low=text.toLowerCase();
+          let ok=false;
+          if(mode==="phrase") ok=low.includes(q.toLowerCase());
+          else if(mode==="all") ok=words.every(w=>low.includes(w));
+          else ok=words.some(w=>low.includes(w));
+          if(ok && results.length<250){
+            results.push({
+              ref:bookName(book)+" "+chapterNumber(chapter,ci)+":"+verseNumber(verse,vi),
+              text
+            });
+          }
+        });
+      });
+    });
+    out.innerHTML=results.length
+      ? results.map(r=>'<div class="advanced-result"><strong>'+esc(r.ref)+'</strong> '+esc(r.text)+'</div>').join("")
+      : '<div class="advanced-muted">No matches found.</div>';
+    if(results.length>=250) out.insertAdjacentHTML("beforeend",'<div class="advanced-muted">Showing the first 250 matches.</div>');
+    recordAdvancedActivity("advanced search",q+" — "+results.length+" result(s)");
+  });
+
+  // Projects
+  function renderProjectPassages(){
+    $("advancedProjectPassages").innerHTML=projectPassages.length
+      ? '<div class="advanced-card"><h4>Passages in this project</h4>'+projectPassages.map(p=>'<div>'+esc(p)+'</div>').join("")+'</div>'
+      : "";
+  }
+  function renderProjects(){
+    const arr=safeParse(ADV_PROJECTS,[]);
+    $("advancedProjectsList").innerHTML=arr.length
+      ? '<h4>Saved Study Projects</h4>'+arr.map((p,i)=>
+          '<div class="advanced-card"><h4>'+esc(p.title)+'</h4>'+
+          '<div class="advanced-muted">'+esc(p.type)+' • '+esc(new Date(p.updatedAt).toLocaleString())+'</div>'+
+          '<div>'+esc(p.notes)+'</div>'+
+          '<div class="advanced-muted">'+(p.passages||[]).map(esc).join(" • ")+'</div>'+
+          '<div class="advanced-actions"><button type="button" data-load-project="'+i+'">Load</button><button type="button" data-delete-project="'+i+'">Delete</button></div></div>'
+        ).join("")
+      : '<div class="advanced-muted">No saved Advanced study projects yet.</div>';
+
+    $("advancedProjectsList").querySelectorAll("[data-load-project]").forEach(b=>b.addEventListener("click",()=>{
+      const p=arr[Number(b.dataset.loadProject)];
+      $("advancedProjectTitle").value=p.title;
+      $("advancedProjectType").value=p.type;
+      $("advancedProjectNotes").value=p.notes||"";
+      projectPassages=p.passages||[];
+      renderProjectPassages();
+    }));
+    $("advancedProjectsList").querySelectorAll("[data-delete-project]").forEach(b=>b.addEventListener("click",()=>{
+      arr.splice(Number(b.dataset.deleteProject),1);
+      saveJSON(ADV_PROJECTS,arr);
+      renderProjects();
+    }));
+  }
+  $("advancedAddCurrentPassage").addEventListener("click",()=>{
+    const ref=currentReference();
+    if(!ref){alert("Choose a book and chapter in the Bible Reader first.");return;}
+    if(!projectPassages.includes(ref)) projectPassages.push(ref);
+    renderProjectPassages();
+  });
+  $("advancedSaveProject").addEventListener("click",()=>{
+    const title=$("advancedProjectTitle").value.trim();
+    if(!title){alert("Enter a study title.");return;}
+    const arr=safeParse(ADV_PROJECTS,[]);
+    const project={
+      title,
+      type:$("advancedProjectType").value,
+      notes:$("advancedProjectNotes").value.trim(),
+      passages:[...projectPassages],
+      updatedAt:new Date().toISOString()
+    };
+    const idx=arr.findIndex(p=>String(p.title).toLowerCase()===title.toLowerCase());
+    if(idx>=0) arr[idx]=project; else arr.unshift(project);
+    saveJSON(ADV_PROJECTS,arr);
+    renderProjects();
+    recordAdvancedActivity("study project",title);
+  });
+  renderProjects();
+
+  // Workflows
+  const workflowTemplates={
+    inductive:["Read the passage slowly","Record observations","Identify repeated words and structure","Ask who, what, when, where, why, and how","Compare translations","Check cross-references and word studies","Interpret the passage in context","Write applications and prayer"],
+    topical:["Define the topic","Collect key passages","Separate direct teaching from examples","Compare Old and New Testament treatment","Study important Hebrew/Greek terms","Record major themes","Summarize conclusions","Write personal application"],
+    character:["List major passages about the person","Build a life timeline","Record strengths and failures","Study relationships and decisions","Identify turning points","Compare what Scripture says about the person","Summarize lessons","Write applications"],
+    sermon:["Choose the main passage","Establish context","State the central idea","Study key words and cross-references","Build major points from the text","Add explanation and application","Create introduction and conclusion","Review for biblical accuracy and clarity"]
+  };
+  function loadWorkflow(saved){
+    const type=(saved&&saved.type)||$("advancedWorkflowType").value;
+    const checks=(saved&&saved.checks)||[];
+    $("advancedWorkflowType").value=type;
+    $("advancedWorkflowSteps").innerHTML=(workflowTemplates[type]||[]).map((step,i)=>
+      '<label class="workflow-step"><input type="checkbox" data-workflow-check="'+i+'" '+(checks[i]?"checked":"")+'><span>'+esc(step)+'</span></label>'
+    ).join("");
+  }
+  $("advancedStartWorkflow").addEventListener("click",()=>loadWorkflow(null));
+  $("advancedSaveWorkflow").addEventListener("click",()=>{
+    const checks=[...document.querySelectorAll("[data-workflow-check]")].map(c=>c.checked);
+    saveJSON(ADV_WORKFLOW,{type:$("advancedWorkflowType").value,checks,updatedAt:new Date().toISOString()});
+    recordAdvancedActivity("workflow",$("advancedWorkflowType").selectedOptions[0].text);
+  });
+  loadWorkflow(safeParse(ADV_WORKFLOW,null));
+
+  // Reading Plans
+  function flattenChapters(data){
+    const list=[];
+    (data.books||[]).forEach((book,bi)=>(book.chapters||[]).forEach((chapter,ci)=>
+      list.push({bi,ci,ref:bookName(book)+" "+chapterNumber(chapter,ci)})
+    ));
+    return list;
+  }
+  $("advancedGeneratePlan").addEventListener("click",()=>{
+    const out=$("advancedPlanOutput");
+    if(!ready()){out.innerHTML='<div class="advanced-error">Choose a starting book and chapter first.</div>';return;}
+    const name=$("advancedPlanName").value.trim()||"Custom Reading Plan";
+    const per=Math.max(1,Number($("advancedPlanChapters").value)||1);
+    const days=Math.max(1,Number($("advancedPlanDays").value)||1);
+    const flat=flattenChapters(readerBible);
+    const start=flat.findIndex(x=>x.bi===readerBookIndex&&x.ci===readerChapterIndex);
+    const schedule=[];
+    for(let d=0;d<days;d++){
+      const readings=flat.slice(start+d*per,start+(d+1)*per).map(x=>x.ref);
+      if(!readings.length) break;
+      schedule.push({day:d+1,readings,done:false});
+    }
+    const plans=safeParse(ADV_PLANS,[]);
+    plans.unshift({name,createdAt:new Date().toISOString(),schedule});
+    saveJSON(ADV_PLANS,plans.slice(0,50));
+    out.innerHTML='<div class="advanced-success">Saved '+esc(name)+'</div>'+
+      schedule.map(x=>'<div class="advanced-card"><strong>Day '+x.day+':</strong> '+x.readings.map(esc).join(", ")+'</div>').join("");
+    recordAdvancedActivity("reading plan",name);
+  });
+
+  // Analytics
+  function renderAnalytics(){
+    const h=safeParse(ADV_HISTORY,[]);
+    const days=new Set(h.map(x=>String(x.at).slice(0,10)));
+    const today=new Date().toISOString().slice(0,10);
+    const todayCount=h.filter(x=>String(x.at).startsWith(today)).length;
+    $("advancedAnalyticsStats").innerHTML=
+      '<div class="analytics-stat"><strong>'+h.length+'</strong>Total actions</div>'+
+      '<div class="analytics-stat"><strong>'+days.size+'</strong>Active days</div>'+
+      '<div class="analytics-stat"><strong>'+todayCount+'</strong>Today</div>'+
+      '<div class="analytics-stat"><strong>'+safeParse(ADV_PROJECTS,[]).length+'</strong>Projects</div>';
+    $("advancedHistoryList").innerHTML=h.length
+      ? h.slice(0,100).map(x=>'<div class="saved-item-row"><div><strong>'+esc(x.type)+'</strong><div>'+esc(x.detail)+'</div></div><span class="advanced-muted">'+esc(new Date(x.at).toLocaleString())+'</span></div>').join("")
+      : '<div class="advanced-muted">No Advanced study history yet.</div>';
+  }
+  $("advancedRefreshAnalytics").addEventListener("click",renderAnalytics);
+  $("advancedClearHistory").addEventListener("click",()=>{
+    if(confirm("Clear Advanced study history?")){
+      localStorage.removeItem(ADV_HISTORY);
+      renderAnalytics();
+    }
+  });
+  renderAnalytics();
+
+  if(readerChapterSelect){
+    readerChapterSelect.addEventListener("change",()=>{
+      setTimeout(()=>{ if(ready()) recordAdvancedActivity("chapter",currentReference()); },0);
+    });
+  }
+
+  // Saved Work
+  function scanSavedWork(){
+    const rows=[];
+    for(let i=0;i<localStorage.length;i++){
+      const key=localStorage.key(i);
+      if(!key) continue;
+      const low=key.toLowerCase();
+      if(low.includes("note") || low.includes("highlight") || low.includes("bookmark")){
+        rows.push({key,content:localStorage.getItem(key)||""});
+      }
+    }
+    return rows;
+  }
+  $("advancedScanSavedWork").addEventListener("click",()=>{
+    const rows=scanSavedWork();
+    const counts={note:0,highlight:0,bookmark:0};
+    rows.forEach(r=>{
+      const low=r.key.toLowerCase();
+      if(low.includes("note")) counts.note++;
+      if(low.includes("highlight")) counts.highlight++;
+      if(low.includes("bookmark")) counts.bookmark++;
+    });
+    $("advancedSavedWorkOutput").innerHTML=
+      '<div class="analytics-row">'+
+      '<div class="analytics-stat"><strong>'+counts.note+'</strong>Notes</div>'+
+      '<div class="analytics-stat"><strong>'+counts.highlight+'</strong>Highlights</div>'+
+      '<div class="analytics-stat"><strong>'+counts.bookmark+'</strong>Bookmarks</div>'+
+      '</div>'+
+      rows.slice(0,100).map(r=>'<div class="saved-item-row"><div><strong>'+esc(r.key)+'</strong><div class="advanced-muted">'+esc(r.content)+'</div></div></div>').join("");
+    recordAdvancedActivity("saved work scan",rows.length+" item(s)");
+  });
+
+  $("advancedExportSavedWork").addEventListener("click",()=>{
+    const data={
+      exportedAt:new Date().toISOString(),
+      savedWork:scanSavedWork(),
+      advancedProjects:safeParse(ADV_PROJECTS,[]),
+      readingPlans:safeParse(ADV_PLANS,[]),
+      workflow:safeParse(ADV_WORKFLOW,null)
+    };
+    const blob=new Blob([JSON.stringify(data,null,2)],{type:"application/json"});
+    const url=URL.createObjectURL(blob);
+    const a=document.createElement("a");
+    a.href=url;
+    a.download="BibleMastery-Advanced-Personal-Study-export.json";
+    document.body.appendChild(a);
+    a.click();
+    a.remove();
+    URL.revokeObjectURL(url);
+    recordAdvancedActivity("export","Advanced Personal Study data");
+  });
+})();
 </script>
 
 </body>
